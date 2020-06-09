@@ -1,0 +1,18 @@
+class Solution {
+    public int romanToInt(String s) {
+        String[] k = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        int[] v = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        int res = 0;
+        int i = 0;
+        while (i < s.length()) {
+            for (int j = 0; j < k.length; j++) {
+                if (s.substring(i).startsWith(k[j])) {
+                    res += v[j];
+                    i += k[j].length();
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+}

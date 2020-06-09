@@ -1,0 +1,24 @@
+class Solution {
+    public boolean isMatch(String ss, String pp) {
+        int n = ss.length(), m = pp.length();
+        ss = ' ' + ss;
+        pp = ' ' + pp;
+        char[] s = ss.toCharArray();
+        char[] p = pp.toCharArray();
+        boolean[][] dp = new boolean[n+1][m+1];
+        dp[0][0] = true;
+        for (int j = 2; j <= m; j++) {
+            dp[0][j] = dp[0][j-2] && p[j] == '*';
+        }
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (j < m && p[j+1] == '*') continue;
+                dp[i][j] = (s[i] == p[j] || p[j] == '.') && dp[i-1][j-1];
+                if (p[j] == '*') {
+                    dp[i][j] = dp[i][j-2] || dp[i-1][j] && (s[i] == p[j-1] || p[j-1] == '.');
+                }
+            }
+        }
+        return dp[n][m];
+    }
+}
