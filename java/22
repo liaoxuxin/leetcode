@@ -1,0 +1,17 @@
+class Solution {
+    List<String> res = new ArrayList();
+    public void dfs(String s, int l, int r, int n) {
+        if (l > n || r > n || r > l) {
+            return;
+        }
+        if (l == n && r == n) {
+            res.add(s);
+        }
+        dfs(s + '(', l + 1, r, n);
+        dfs(s + ')', l, r + 1, n);
+    }
+    public List<String> generateParenthesis(int n) {
+        dfs("", 0, 0, n);
+        return res;
+    }
+}
