@@ -1,0 +1,25 @@
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int n = nums.length;
+        int i = n - 1;
+        for (; i > 0; i--) {
+            if (nums[i] > nums[i-1]) {
+                break;
+            }
+        }
+        if (i == 0) {
+            Arrays.sort(nums);
+            return;
+        }
+        int j = n - 1;
+        for (; j >= i; j--) {
+            if (nums[j] > nums[i-1]) {
+                int tmp = nums[j];
+                nums[j] = nums[i-1];
+                nums[i-1] = tmp;
+                break;
+            }
+        }
+        Arrays.sort(nums, i, n);
+    }
+}
