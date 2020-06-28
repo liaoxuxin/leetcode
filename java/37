@@ -1,0 +1,37 @@
+class Solution {
+    private boolean isVaild(char[][] board, int i, int j, char c) {
+        for (int s = 0; s < 9; s++) {
+            if (board[i][s] == c) {
+                return false;
+            }
+            if (board[s][j] == c) {
+                return false;
+            }
+            if (board[i/3*3+s/3][j/3*3+s%3] == c) {
+                return false;
+            }
+        }
+        return true;
+    }
+    private boolean backTrack(char[][] board, int i, int j) {
+        if (i == 9) {
+            return true;
+        }
+        if (board[i][j] != '.') {
+            return backTrack(board, j == 8 ? i + 1 : i, j == 8 ? 0 : j + 1);
+        }
+        for (char c = '1'; c <= '9'; c++) {
+            if (isVaild(board, i, j, c)) {
+                board[i][j] = c;
+                if (backTrack(board, j == 8 ? i + 1 : i, j == 8 ? 0 : j + 1)) {
+                    return true;
+                }
+                board[i][j] = '.';
+            }
+        }
+        return false;
+    }
+    public void solveSudoku(char[][] board) {
+        backTrack(board, 0, 0);
+    }
+}
