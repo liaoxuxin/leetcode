@@ -1,0 +1,45 @@
+class Solution {
+    private StringBuilder add(StringBuilder res, StringBuilder sb) {
+        int i = res.length() - 1, j = sb.length() - 1;
+        StringBuilder tmp = new StringBuilder();
+        int flag = 0;
+        while (i >= 0 || j >= 0 || flag != 0) {
+            int cur = 0;
+            if (i >= 0) {
+                cur += res.charAt(i) - '0';
+                i--;
+            }
+            if (j >= 0) {
+                cur += sb.charAt(j) - '0';
+                j--;
+            }
+            cur += flag;
+            tmp.insert(0, cur % 10);
+            flag = cur / 10;
+        }
+        while (tmp.charAt(0) == '0' && tmp.length() != 1) {
+            tmp.deleteCharAt(0);
+        }
+        return tmp;
+    }
+    public String multiply(String num1, String num2) {
+        StringBuilder res = new StringBuilder(0);
+        StringBuilder tmp = new StringBuilder();
+        for (int i = num1.length() - 1; i >= 0; i--) {
+            int flag = 0;
+            StringBuilder sb = new StringBuilder();
+            for (int j = num2.length() - 1; j >= 0; j--) {
+                int cur = (num1.charAt(i) - '0') * (num2.charAt(j) - '0') + flag;
+                sb.insert(0, cur % 10);
+                flag = cur / 10;
+            }
+            if (flag != 0) {
+                sb.insert(0, flag);
+            }
+            sb.append(tmp);
+            res = add(res, sb);
+            tmp.append(0);
+        }
+        return res.toString();
+    }
+}

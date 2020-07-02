@@ -1,0 +1,21 @@
+class Solution {
+    private Map<Integer, Integer> map = new LinkedHashMap<>();
+    private Set<List<Integer>> res = new HashSet<>();
+    private void dfs(int[] nums) {
+        if (map.size() == nums.length) {
+            res.add(new ArrayList<>(map.values()));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (!map.containsKey(i)) {
+                map.put(i, nums[i]);
+                dfs(nums);
+                map.remove(i);
+            }
+        }
+    }
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        dfs(nums);
+        return new ArrayList<>(res);
+    }
+}

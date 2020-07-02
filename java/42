@@ -1,0 +1,17 @@
+class Solution {
+    public int trap(int[] height) {
+        int res = 0;
+        for (int i = 0; i < height.length; i++) {
+            int lmax = 0, rmax = 0;
+            for (int j = 0; j < i; j++) {
+                lmax = Math.max(height[j], lmax);
+            }
+            for (int j = i + 1; j < height.length; j++) {
+                rmax = Math.max(height[j], rmax);
+            }
+            int rain = Math.min(lmax, rmax) - height[i];
+            res += rain > 0 ? rain : 0;
+        }
+        return res;
+    }
+}
