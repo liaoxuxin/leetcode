@@ -1,0 +1,25 @@
+class Solution {
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        List<int[]> res = new ArrayList<>();
+        int i = 0;
+        for (; i < intervals.length; i++) {
+            if (intervals[i][0] > newInterval[0]) {
+                break;
+            }
+            res.add(new int[]{intervals[i][0], intervals[i][1]});
+        }
+        if (res.size() == 0 || newInterval[0] > res.get(res.size()-1)[1]) {
+                res.add(new int[]{newInterval[0], newInterval[1]});
+        } else {
+            res.get(res.size()-1)[1] = Math.max(res.get(res.size()-1)[1], newInterval[1]);
+        }
+        for (; i < intervals.length; i++) {
+            if (intervals[i][0] > res.get(res.size()-1)[1]) {
+                res.add(new int[]{intervals[i][0], intervals[i][1]});
+            } else {
+                res.get(res.size()-1)[1] = Math.max(res.get(res.size()-1)[1], intervals[i][1]);
+            }
+        }
+        return res.toArray(new int[0][0]);
+    }
+}

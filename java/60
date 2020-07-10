@@ -1,0 +1,30 @@
+class Solution {
+    private int cur = 0;
+    private boolean flag = true;
+    private boolean[] used;
+    private String res;
+    private void dfs(StringBuilder sb, int n, int k) {
+        if (flag && sb.length() == n) {
+            cur++;
+            if (cur == k) {
+                res = sb.toString();
+                flag = false;
+            }
+            return;
+        }
+        for (int i = 1; i <= n; i++) {
+            if (used[i]) {
+                continue;
+            }
+            used[i] = true;
+            dfs(sb.append(i), n, k);
+            sb.deleteCharAt(sb.length()-1);
+            used[i] = false;
+        }
+    }
+    public String getPermutation(int n, int k) {
+        used = new boolean[n+1];
+        dfs(new StringBuilder(), n, k);
+        return res;
+    }
+}

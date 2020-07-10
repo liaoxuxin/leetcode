@@ -1,0 +1,34 @@
+class Solution {
+    public int[][] generateMatrix(int n) {
+        int[][] res = new int[n][n];
+        int cur = 0, p = 1;
+        while (true) {
+            for (int j = cur; j < n - cur; j++) {
+                res[cur][j] = p++;
+            }
+            if (p > n * n) {
+                break;
+            }
+            for (int i = cur + 1; i < n - 1 - cur; i++) {
+                res[i][n-1-cur] = p++;
+            }
+            if (p > n * n) {
+                break;
+            }
+            for (int j = n - 1 - cur; j >= cur; j--) {
+                res[n-1-cur][j] = p++;
+            }
+            if (p > n * n) {
+                break;
+            }
+            for (int i = n - 2 - cur; i >= cur + 1; i--) {
+                res[i][cur] = p++;
+            }
+            if (p > n * n) {
+                break;
+            }
+            cur++;
+        }
+        return res;
+    }
+}

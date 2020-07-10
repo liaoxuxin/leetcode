@@ -1,0 +1,61 @@
+class Solution {
+    private List<List<String>> res = new ArrayList<>();
+    private boolean isVaild(char[][] arrs, int s, int t) {
+        int n = arrs.length;
+        for (int i = 0; i < n; i++) {
+            if (i != s && arrs[i][t] == 'Q') {
+                return false;
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            if (i != s && s + t - i >= 0 && s + t - i < n && s + t - i != t && arrs[i][s+t-i] == 'Q') {
+                return false;
+            }
+        }
+        int i = 0, j = t - s;
+        while (i < n && j < n) {
+            if (j < 0) {
+                i++;
+                j++;
+                continue;
+            }
+            if (i != s && j != t && arrs[i][j] == 'Q') {
+                return false;
+            }
+            i++;
+            j++;
+        }
+        return true;
+    }
+    private void backtrace(char[][] arrs, int cur) {
+        int n = arrs.length;
+        for (int j = 0; j < n; j++) {
+            arrs[cur][j] = 'Q';
+            if (isVaild(arrs, cur, j)) {
+                if (cur == n - 1) {
+                    List<String> tmp = new ArrayList<>();
+                    for (int u = 0; u < n; u++) {
+                        StringBuilder sb = new StringBuilder();
+                        for (int v = 0; v < n; v++) {
+                            sb.append(arrs[u][v]);
+                        }
+                        tmp.add(sb.toString());
+                    }
+                    res.add(tmp);
+                    arrs[cur][j] = '.';
+                    return;
+                }
+                backtrace(arrs, cur + 1);
+            }
+            arrs[cur][j] = '.';
+        }
+    }
+    public List<List<String>> solveNQueens(int n) {
+        char[][] arrs = new char[n][n];
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(arrs[i], '.');
+        }
+        backtrace(arrs, 0);
+        return res;
+    }
+}
